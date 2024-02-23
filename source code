@@ -1,0 +1,590 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+
+struct allData {
+    float transact_amt;
+    string transact_date;
+    string transact_time;
+    string transact_from_account;
+    string transact_type;
+    float transact_balance;
+    string transact_id;
+};
+
+class HomeAddress{
+    private:
+    int doorNumber;
+    string street;
+    string locality;
+    string area;
+    string landmark;
+    string taluk;
+    string district; 
+    string state;
+    int pin;
+    
+    public:
+     void setdoorNumber(int door){
+        doorNumber= door;
+    }
+    void setStreet(string street){
+        this->street = street;
+    }
+    void setLocality(string locality){
+        this->locality=locality;
+    }
+    void setArea(string area){
+        this->area=area;
+    }
+    
+    void setLandmark(string landmark){
+        this->landmark=landmark;
+    }
+    
+    void setTaluk(string taluk){
+        this->taluk=taluk;
+    }
+    
+    void setDistrict(string district){
+        this->district=district;
+    }
+    
+    void setState(string state){
+        this->state=state;
+        
+    }
+    void setPin(int pin){
+        this->pin=pin;
+    }
+    
+    int getDoorNumber(){
+        return doorNumber;
+    }
+    
+    string getstreet(){
+        return street;
+    }
+    
+    string getLocality(){
+        
+        return locality;
+    }
+    
+    string getArea(){
+        return area;
+    }
+    string getLandmark(){
+        return landmark;
+    }
+    string getTaluk(){
+        return taluk;
+    }
+    string getDistrict(){
+        return district;
+    }
+    string getState(){
+        return state;
+    }
+    int getPin(){
+        return pin;
+    }
+    
+};
+
+class BankAccount{
+    private:
+    string firstname;
+    string lastname;
+    string phone ;
+    string email;
+    string password;
+    string IFSC;
+    string date;
+    bool has_creditCard;
+    bool has_debitCard;
+    float balance;
+    float min_bal;
+    float credit;
+    
+    
+    
+    
+    
+    public:
+    BankAccount(){
+        firstname="";
+        lastname="";
+        phone="";
+        email="";
+        password="";
+        IFSC="";
+        date="";
+        has_debitCard=false;
+        has_creditCard=false;
+        balance=0.0;
+        min_bal=0.0;
+        credit=0.0;
+        
+    }
+    
+     
+    
+    void setfirstname(string firstname){
+        this->firstname= firstname;
+    }
+    
+    void setlastname(string lastname){
+        this->lastname= lastname;
+    }
+    
+    void setphone(string phone){
+        this->phone = phone;
+        
+    }
+    
+    void setemail(string email){
+        this->email = email;
+    }
+    
+    void setpassword(string password){
+        this->password = password;
+    }
+    
+    void setIFSC(string IFSC){
+        this->IFSC = IFSC;
+    }
+    
+    void setdate(string date){
+        this->date= date;
+    }
+    
+    void sethas_creditCard(bool option){
+        has_creditCard = option;
+    }
+    
+    void sethas_debitCard(bool option){
+        has_debitCard= option;
+    }
+    
+    void setBalance(float balance){
+        this->balance = balance;
+    }
+    
+    void setmin_bal(float min_bal){
+        this->min_bal = min_bal;
+    }
+    
+    void Credit(float credit , string from_account , string date, string time,allData x , string typeOfCredit){
+        x.transact_balance += credit;
+        x.transact_date = date;
+        x.transact_time = time;
+        x.transact_from_account= from_account;
+        x.transact_amt = credit;
+        x.transact_type= typeOfCredit;
+        
+        string id= generateID(from_account, date, time);
+        
+        x.transact_id = id;
+        
+    }
+    
+   
+    
+    // CurrentAccount getCurrentAccountMap(string accountNumber){
+    //     return currentaccount_mp[accountNumber];
+    // }
+    
+    
+    
+    
+    
+    
+    string getfirstname(){
+    return firstname;
+    }
+    
+    string getlastname(){
+        return lastname;
+    }
+    
+    string getphone(){
+        return phone;
+    }
+    
+    string getemail(){
+        return email;
+    }
+    
+    string getpassword(){
+        return password;
+    }
+    
+    string getIFSC(){
+        return IFSC;
+    }
+    
+    string getDate(){
+        return date;
+    }
+    
+    bool gethas_creditCard(){
+        return has_creditCard;
+    }
+    
+    bool gethas_debitCard(){
+        return has_debitCard;
+    }
+    
+    float getbalance(){
+        return balance;
+    }
+    
+    float getmin_bal(){
+        return min_bal;
+    }
+    
+    float getCredit(){
+        return credit;
+    }
+    
+   string generateID(string from_account, string date ,string time){
+        string ans ; 
+        ans+="C";
+        ans+= from_account.substr(0,4);
+        return ans;
+        
+    }
+    
+
+
+};
+
+
+class SavingsAccount: public BankAccount{
+    
+    public:
+    string account_type="Savings";
+    // Debit(float amount , string accountNumber ){
+        
+    // }
+    
+    
+    
+};
+
+class CurrentAccount: public BankAccount{
+    private:
+    public:
+    string account_type= "Current";
+    
+};
+
+
+class Data{
+    private:
+    map<string, HomeAddress> address_mp;
+    map<string, SavingsAccount > savingsaccount_mp;
+    map<string, CurrentAccount > currentaccount_mp;
+    map<string,vector<struct allData>> alltrans_mp;
+    
+    public:
+     void setHomeAddress(string accountNumber, HomeAddress hm){
+        address_mp[accountNumber]= hm;
+    }
+   
+    
+     void setSavingsAccountMap(string accountNumber, SavingsAccount obj){
+        savingsaccount_mp[accountNumber] = obj;
+    }
+    int  findInSavingsBankAccount(string accountNumber){
+       map<string, SavingsAccount>:: iterator it;
+        it  = savingsaccount_mp.find(accountNumber);
+        if(it != savingsaccount_mp.end()){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    void setCurrentAccountMap(string accountNumber, CurrentAccount obj){
+        currentaccount_mp[accountNumber] = obj;
+    }
+    int  findInCurrentBankAccount(string accountNumber){
+       map<string, CurrentAccount>:: iterator it;
+        it  = currentaccount_mp.find(accountNumber);
+        if(it != currentaccount_mp.end()){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    
+    void printSavingsAccount(string accountNumber,Data d){
+        map<string,SavingsAccount>::iterator it = d.savingsaccount_mp.begin();
+    while(it!=d.savingsaccount_mp.end()){
+        
+        if(it->first == accountNumber){
+             SavingsAccount s=it->second;
+            HomeAddress hm =d.address_mp[accountNumber];
+            
+            cout<<"FirstName: "<<s.getfirstname()<<endl;
+            cout<<"LastName: "<<s.getlastname()<<endl;
+            cout<<"Phone: "<<s.getphone()<<endl;
+            cout<<"Email: "<<s.getemail()<<endl;
+            
+            cout<<"Password: "<<s.getpassword()<<endl;
+            cout<<"IFSC: "<<s.getIFSC()<<endl;
+            cout<<"Date: "<<s.getDate()<<endl;
+            cout<<"Has Debit Card: "<<(s.gethas_debitCard()?"yes":"no") <<endl;
+            cout<<"Has Credit Card: "<< (s.gethas_creditCard()?"yes":"no") <<endl;
+            cout<<"Minimum Balance: "<< s.getmin_bal()<< endl;
+            cout<<"Account Type: "<<s.account_type<< endl; 
+           
+        }
+    
+    it++;
+    }
+    
+    void printCurrentAccount(string accountNumber,Data &d){
+        map<string,SavingsAccount>::iterator it = d.currentaccount_mp.begin();
+    while(it!=d.currentaccount_mp.end()){
+        
+        if(it->first == accountNumber){
+             CurrentAccount s=it->second;
+    
+            cout<<"FirstName: "<<s.getfirstname()<<endl;
+            cout<<"LastName: "<<s.getlastname()<<endl;
+            cout<<"Phone: "<<s.getphone()<<endl;
+            cout<<"Email: "<<s.getemail()<<endl;
+            cout<<"Password: "<<s.getpassword()<<endl;
+            cout<<"IFSC: "<<s.getIFSC()<<endl;
+            cout<<"Date: "<<s.getDate()<<endl;
+            cout<<"Has Debit Card: "<<(s.gethas_debitCard()?"yes":"no") <<endl;
+            cout<<"Has Credit Card: "<< (s.gethas_creditCard()?"yes":"no") <<endl;
+            cout<<"Minimum Balance: "<< s.getmin_bal()<< endl;
+            cout<<"Account Type: "<<s.account_type<< endl; 
+           
+        }
+    
+    it++;
+    }
+    
+    
+    }
+    
+    }
+    
+};
+
+void createBankAccount(Data &d){
+    
+     cout<<"\n Enter first name and last name \n";
+                string name; 
+                getline(cin,name);
+                string first;
+                int i;
+                for( i = 0 ;i<name.length() ; i++){
+                    if(name[i] == ' '){
+                        break;
+                    }
+                    else{
+                        first+=name[i];
+                    }
+                }
+                string last = name.substr(i,name.length());
+                cout<<"\nEnter Phone Number\n";
+                string phone;
+                getline(cin,phone);
+                cout<<"\nEnter Door Number\n";
+                int door;
+                cin>>door;
+                cin.ignore();
+                cin.sync();
+                cout<< "\n Enter Street\n";
+                string street; 
+                getline(cin,street);
+                cout<<"\nEnter Locality\n";
+                string locality;
+                getline(cin,locality);
+                cout<<"\nEnter Area\n";
+                string area;
+                getline(cin,area);
+                cout<<"\nEnter Landmark\n";
+                string landmark;
+                getline(cin,landmark);
+                cout<<"\nEnter Taluk\n";
+                string taluk;
+                getline(cin,taluk);
+                cout<<"\nEnter District\n";
+                string district ;
+                getline(cin,district);
+                cout<<"\nEnter State\n";
+                string state;
+                getline(cin,state);
+                cout<<"\nEnter Pincode\n";
+                int pin;
+                cin>>pin;
+                cin.ignore();
+                cin.sync();
+                cout<<"\nEnter Email\n";
+                string email;
+                getline(cin,email);
+                cout<<"\nEnter Password\n";
+                string password;
+                getline(cin,password);
+                cout<<"\nEnter Account Number\n";
+                string accountNumber;
+                getline(cin,accountNumber);
+                cout<<"\nEnter Branch\n";
+                string branch;
+                getline(cin,branch);
+                cout<<"\nEnter IFSC code\n";
+                string IFSC;
+                getline(cin,IFSC);
+                cout<<"\n Date of Account opening (format: dd-mm-year)\n";
+                string date;
+                getline(cin,date);
+                cout<<"\nHas Credit Card? (true/false)\n";
+                string has_creditCard;
+                getline(cin,has_creditCard);
+                cout<<"\nHas Debit Card? (true/false) \n";
+                string has_debitCard;
+                getline(cin,has_debitCard);
+                cout<<"\nEnter balance\n";
+                float balance;
+                cin>>balance;
+                cout<<"\nEnter Minimum balance\n";
+                int min_bal;
+                cin>> min_bal;
+                cin.ignore();
+                cin.sync();
+                cout<<"\nEnter Account type (S for 'Savings' or C for 'Current' \n";
+                string account_type;
+                cin>>account_type;
+                HomeAddress addrs;
+                addrs.setdoorNumber(door);
+                addrs.setStreet(street);
+                addrs.setLocality(locality);
+                addrs.setArea(area);
+                addrs.setLandmark(landmark);
+                addrs.setTaluk(taluk);
+                addrs.setDistrict(district);
+                addrs.setState(state);
+                addrs.setPin(pin);
+                
+                d.setHomeAddress(accountNumber,addrs);
+                    
+                if(account_type[0] == 'S'){
+                    
+                    SavingsAccount obj;
+                    obj.setfirstname(first);
+                    obj.setlastname(last);
+                    obj.setphone(phone);
+                    obj.setemail(email);
+                    obj.setpassword(password);
+                    obj.setIFSC(IFSC);
+                    obj.setdate(date);
+                    obj.sethas_creditCard(has_creditCard=="true"?true:false);
+                    obj.sethas_debitCard(has_debitCard=="true"?true:false);
+                    obj.setBalance(balance);
+                    obj.setmin_bal(min_bal);
+                    
+                    int  it= d.findInSavingsBankAccount(accountNumber);
+                    if(it!=0){
+                        cout<<"\nAccount Number already exists\n";
+                        cout<<"\nPlease Re-Enter the Details with a new Account Number for account creation \n";
+                        return;
+                    }
+                    else{
+                       d.setSavingsAccountMap(accountNumber,obj);
+                      d.printSavingsAccount(accountNumber,d);
+                    }
+                }
+                
+                else{
+                    CurrentAccount obj;
+                     obj.setfirstname(first);
+                    obj.setlastname(last);
+                    obj.setphone(phone);
+                    obj.setemail(email);
+                    obj.setpassword(password);
+                    obj.setIFSC(IFSC);
+                    obj.setdate(date);
+                    obj.sethas_creditCard(has_creditCard=="true"?true:false);
+                    obj.sethas_debitCard(has_debitCard=="true"?true:false);
+                    obj.setBalance(balance);
+                    obj.setmin_bal(min_bal);
+                    int  it= d.findInCurrentBankAccount(accountNumber);
+                    if(it!=0){
+                        cout<<"\nAccount Number already exists\n";
+                        cout<<"\nPlease Re-Enter the Details with a new Account Number for account creation \n";
+                        return;
+                    }
+                    else{
+                       d.setCurrentAccountMap(accountNumber,obj);
+                       cout<<"\nAccount Successfully Created\n";
+                       d.printCurrentAccount(accountNumber,d);
+                    }
+                }
+                
+               
+}
+
+
+int main()
+{
+    int flag=1;
+    
+    Data d;
+    
+    cout<<"\n Welcome to Sasken Bank :)  \n";
+    while(flag){
+        cout<<"1. Create Account\n";
+        cout<<"2. Display Account Details\n";
+        cout<<"3. Debit\n";
+        cout<<"4. Credit\n";
+        cout<<"5. List All Transactions\n";
+        
+        cout<<"\n Enter 0 to exit\n";
+        int n;
+        cin>>n;
+        cin.ignore();
+        cin.sync();
+        if(n==0){
+            flag=0;
+            cout<<"-----Thank you------\n";
+            break;
+        }
+        
+        switch(n){
+            case 1:
+               
+               createBankAccount(d); 
+                
+               break; 
+               
+               
+            default: 
+                cout<<"Wrong Choice";
+                
+                
+        }
+
+        
+    }
+    
+
+    
+    return 0;
+}
